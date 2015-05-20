@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="clienteMYSQL">
+	
+	<resultMap id="clienteMap" type="clienteBeanIbatis">
+         <id property="idCliente" column="e_idCliente" />
+         <result property="dni" column="e_dni" />
+         <result property="nombre" column="e_nombre" />
+         <result property="apePaterno" column="e_apePaterno" />
+         <result property="apeMaterno" column="e_apeMaterno" />
+         <result property="fechaNacimiento" column="e_fechaNacimiento" />
+         <result property="celular" column="e_celular" />
+         <result property="direccion" column="e_direccion" />
+         <association property="usuario"  resultMap="usuarioMap"/>
+     </resultMap>
+  	
+  	 <resultMap id="usuarioMap" type="usuarioBeanIbatis">
+         <id property="idUsuario" column="u_idUsuario" />
+         <result property="username" column="u_username" />
+     </resultMap>
+     
+	<select id="SQL_buscaCliente"  parameterType="int" resultType="clienteBeanIbatis">
+	SELECT 
+		idCliente as idCliente,
+		dni as dni,
+		nombre as nombre,
+		apePaterno as apePaterno,
+		apeMaterno as apeMaterno,
+		sexo as sexo,
+		fechaNacimiento as fechaNacimiento,
+		direccion as direccion,
+		correo as correo,
+		celular as celular,
+		img_byte as filImagenBytes,
+		img_nombre as filImagenFileName,
+		img_content_type as filImagenContentType,
+		idUsuario as idUsuario
+	FROM
+		Cliente
+	WHERE
+		idCliente = #{id}
+	</select>
+	<select id="SQL_registraCliente"  parameterType="clienteBeanIbatis">
+	INSERT INTO Cliente VALUES(null,
+		#{dni},
+		#{nombre},
+		#{apePaterno},
+		#{apeMaterno},
+		#{sexo},
+		#{fechaNacimiento},
+		#{direccion},
+		#{correo},
+		#{celular},
+		#{filImagenBytes},
+		#{filImagenFileName},
+		#{filImagenContentType},
+		#{idUsuario})
+	</select>
+	<select id="SQL_eliminaCliente"  parameterType="java.lang.String" resultType="clienteBeanIbatis">
+	DELETE FROM Cliente WHERE idCliente =  #{id}
+	</select>
+	<select id="SQL_actualizaCliente"  parameterType="clienteBeanIbatis">
+    UPDATE 
+			Cliente 
+		SET  
+			dni = #{dni}, 
+			nombre = #{nombre},
+			apePaterno = #{apePaterno},
+			apeMaterno = #{apeMaterno},
+			fechaNacimiento = #{fechaNacimiento},
+			direccion = #{direccion},
+			correo = #{correo},
+			celular = #{celular},
+			img_byte = #{filImagenBytes},
+			img_nombre = #{filImagenFileName},
+			img_content_type = #{filImagenContentType},
+			idUsuario = #{idUsuario}
+		WHERE 
+			idCliente = #{idCliente}
+	</select>
+	<select id="SQL_listaCliente"  resultMap="clienteMap" >
+	SELECT
+		E.idCliente as e_idCliente,
+		E.dni as e_dni,
+		E.nombre as e_nombre,
+		E.apePaterno as e_apePaterno,
+		E.apeMaterno as e_apeMaterno,
+		E.fechaNacimiento as e_fechaNacimiento,
+		E.celular as e_celular,
+		E.direccion as e_direccion,
+		U.username as u_username
+	FROM
+		Cliente E
+		INNER JOIN Usuario U ON E.idUsuario = U.idUsuario
+	</select>
+</mapper>

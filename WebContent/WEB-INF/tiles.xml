@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="t_administrador" template="/templates/Administrador/principalAdministrador.jsp" >
+		<put-attribute name="cabecera" value="/templates/Administrador/cabeceraAdministrador.jsp"/>
+		<put-attribute name="menu" value="/templates/Administrador/menuAdministrador.jsp"/>			
+	</definition>
+	
+ 	<definition name="t_index_administrador" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/indexAdministrador.jsp"/>
+		<put-attribute name="modal" value=""/>
+	</definition>
+	
+	<definition name="t_loginTemplate" template="/templates/Administrador/loginTemplate.jsp">
+	</definition>
+	
+	<!-- Tiles de mantenimiento Empleado -->
+ 	<definition name="t_mantenimientoEmpleado" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/mantenimiento/pages/mantenimientoEmpleado.jsp"/>
+		<put-attribute name="modal" value="/pages/Administrador/mantenimiento/modal/modalEmpleado.jsp"/>
+	</definition>
+	
+	<!-- Tiles de mantenimiento Cliente -->
+ 	<definition name="t_mantenimientoCliente" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/mantenimiento/pages/mantenimientoCliente.jsp"/>
+		<put-attribute name="modal" value="/pages/Administrador/mantenimiento/modal/modalCliente.jsp"/>
+	</definition>
+	
+	<!-- Tiles de mantenimiento Item -->
+ 	<definition name="t_mantenimientoItem" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/mantenimiento/pages/mantenimientoItem.jsp"/>
+		<put-attribute name="modal" value="/pages/Administrador/mantenimiento/modal/modalItem.jsp"/>
+	</definition>
+	
+	<!-- Tiles de mantenimiento Torta -->
+ 	<definition name="t_mantenimientoTorta" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/mantenimiento/pages/mantenimientoTorta.jsp"/>
+		<put-attribute name="modal" value="/pages/Administrador/mantenimiento/modal/modalTorta.jsp"/>
+	</definition>
+	
+	<!-- Tiles de mantenimiento Insumo -->
+	<definition name="t_mantenimientoInsumo" extends="t_administrador">
+		<put-attribute name="central" value="/pages/Administrador/mantenimiento/pages/mantenimientoInsumo.jsp"/>
+		<put-attribute name="modal" value="/pages/Administrador/mantenimiento/modal/modalInsumo.jsp"/>
+	</definition>
+	
+	<!-- Login Administrador -->
+ 	<definition name="t_login" extends="t_loginTemplate">
+		<put-attribute name="central" value="/pages/Administrador/loginAdmin.jsp"/>
+	</definition>
+	
+ 	
+ 	<!-- TILES CLIENTE (PÚBLICO) -->
+	<definition name="t_cliente" template="/templates/Cliente/principalCliente.jsp" >
+		<put-attribute name="cabecera" value="/templates/Cliente/cabeceraCliente.jsp"/>
+		<put-attribute name="nav" value="/templates/Cliente/navCliente.jsp"/>
+		<put-attribute name="footer" value="/templates/Cliente/footerCliente.jsp"/>			
+	</definition>
+	
+	<definition name="t_cliente_complete" template="/templates/Cliente/principalCliente.jsp" >
+		<put-attribute name="cabecera" value="/templates/Cliente/cabeceraCliente.jsp"/>
+		<put-attribute name="nav" value="/templates/Cliente/navCliente.jsp"/>
+		<put-attribute name="bottom" value="/pages/Cliente/partnerCliente.jsp"/>
+		<put-attribute name="footer" value="/templates/Cliente/footerCliente.jsp"/>			
+	</definition>
+	
+	<definition name="t_galeria_template" template="/templates/Cliente/galeriaClienteTemplate.jsp" >
+		<put-attribute name="cabecera" value="/templates/Cliente/cabeceraCliente.jsp"/>
+		<put-attribute name="nav" value="/templates/Cliente/navCliente.jsp"/>
+		<put-attribute name="footer" value="/templates/Cliente/footerCliente.jsp"/>			
+	</definition>
+	
+ 	<definition name="t_index_cliente" extends="t_cliente">
+		<put-attribute name="central" value="/pages/Cliente/indexCliente.jsp"/>
+		<put-attribute name="bottom" value="/pages/Cliente/tendenciaCliente.jsp"/>
+	</definition>
+	
+ 	<definition name="t_gallery" extends="t_galeria_template">
+		<put-attribute name="bottom" value="/pages/Cliente/categoriasCliente.jsp"/>
+		<put-attribute name="central" value="/pages/Cliente/galleryCliente.jsp"/>
+		<put-attribute name="bottom_footer" value="/pages/Cliente/partnerCliente.jsp"/>
+	</definition>
+	
+ 	<definition name="t_contact_us" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/contactCliente.jsp"/>
+	</definition>
+	
+ 	<definition name="t_register" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/registerCliente.jsp"/>
+	</definition>	
+	
+ 	<definition name="t_shopcart" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/carritoCompras.jsp"/>
+	</definition>	
+	
+ 	<definition name="t_cakedesigner" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/armaTorta.jsp"/>
+	</definition>	
+	
+ 	<definition name="t_blog" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/blogCliente.jsp"/>
+	</definition>	
+	
+ 	<definition name="t_loginCliente" extends="t_cliente_complete">
+		<put-attribute name="central" value="/pages/Cliente/loginCliente.jsp"/>
+	</definition>	
+ 	
+ 	
+ 	
+</tiles-definitions>

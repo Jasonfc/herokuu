@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- se registran los beans que se usan en los daos -->
+	<typeAliases>
+	
+		<typeAlias alias="usuarioBeanIbatis" type="com.pit.pasteleria.venta.bean.UsuarioBean"/>					
+		<typeAlias alias="enlaceBeanIbatis" type="com.pit.pasteleria.venta.bean.EnlaceBean"/>
+		<typeAlias alias="empleadoBeanIbatis" type="com.pit.pasteleria.venta.bean.EmpleadoBean"/>
+		<typeAlias alias="itemBeanIbatis" type="com.pit.pasteleria.venta.bean.ItemBean"/>
+		<typeAlias alias="categoriaitemBeanIbatis" type="com.pit.pasteleria.venta.bean.CategoriaItemBean"/>
+		<typeAlias alias="rolBeanIbatis" type="com.pit.pasteleria.venta.bean.RolBean"/>
+		<typeAlias alias="insumoBeanIbatis" type="com.pit.pasteleria.venta.bean.InsumoBean"/>	
+		<typeAlias alias="categoriainsumoBeanIbatis" type="com.pit.pasteleria.venta.bean.InsumoCategoriaBean"/>	
+		<typeAlias alias="clienteBeanIbatis" type="com.pit.pasteleria.venta.bean.ClienteBean"/>
+		<typeAlias alias="tortaBeanIbatis" type="com.pit.pasteleria.venta.bean.TortaBean"/>
+		<typeAlias alias="tortaInsumoBeanIbatis" type="com.pit.pasteleria.venta.bean.DetalleTortaItemBean"/>
+		
+				   				   	
+	</typeAliases> 
+	
+	<environments default="development">
+		<environment id="development">
+		
+			<transactionManager type="JDBC" />
+			
+			<dataSource type="UNPOOLED">
+						<property name="driver" value="com.mysql.jdbc.Driver" />
+						<property name="url" value="jdbc:mysql://localhost:3306/bd_proyecto" />
+						<property name="username" value="root" />
+						<property name="password" value="mysql" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!--  Registro de los mappers  -->
+	<mappers>
+		<!-- Mapper para el usuario -->
+		<mapper resource="mappers/usuario.xml" />
+		<mapper resource="mappers/empleado.xml" />
+		<mapper resource="mappers/item.xml" />
+		<mapper resource="mappers/insumos.xml"/>
+		<mapper resource="mappers/utilitarios.xml"/>
+		<mapper resource="mappers/cliente.xml" />
+		<mapper resource="mappers/torta.xml" />
+	</mappers>
+</configuration>
+

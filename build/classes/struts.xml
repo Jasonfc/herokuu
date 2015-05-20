@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.custom.i18n.resources" value="global" />
+	<constant name="struts.action.excludePattern" value=".*/static/.*" />
+	
+	<package name="dawi" namespace="/"
+		extends="struts-default,json-default,tiles-default">
+
+		<action name="a_index">	
+			<result type="tiles">t_index_administrador</result>
+		</action>
+
+		<action name="admin">	
+			<result type="tiles">t_login</result>
+		</action>
+		<!-- VISTA CLIENTE -->
+
+		<action name="a_index_cliente">	
+			<result type="tiles">t_index_cliente</result>
+		</action>
+
+		<action name="a_contact_us">	
+			<result type="tiles">t_contact_us</result>
+		</action>
+
+		<action name="a_gallery">	
+			<result type="tiles">t_gallery</result>
+		</action>
+
+		<action name="a_register">	
+			<result type="tiles">t_register</result>
+		</action>
+
+		<action name="a_blog">	
+			<result type="tiles">t_blog</result>
+		</action>
+
+		<action name="a_cakedesigner">	
+			<result type="tiles">t_cakedesigner</result>
+		</action>
+		
+		<action name="a_shopcart">	
+			<result type="tiles">t_shopcart</result>
+		</action>
+		
+		<action name="a_loginCliente">	
+			<result type="tiles">t_loginCliente</result>
+		</action>
+		
+			
+	</package>
+
+	
+	
+	
+	
+</struts>

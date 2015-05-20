@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="empleadoMYSQL">
+	
+	<resultMap id="empleadoMap" type="empleadoBeanIbatis">
+         <id property="idEmpleado" column="e_idEmpleado" />
+         <result property="dni" column="e_dni" />
+         <result property="nombre" column="e_nombre" />
+         <result property="apePaterno" column="e_apePaterno" />
+         <result property="apeMaterno" column="e_apeMaterno" />
+         <result property="fechaIngreso" column="e_fechaIngreso" />
+         <result property="celular" column="e_celular" />
+         <result property="direccion" column="e_direccion" />
+         <association property="usuario"  resultMap="usuarioMap"/>
+     </resultMap>
+  	
+  	 <resultMap id="usuarioMap" type="usuarioBeanIbatis">
+         <id property="idUsuario" column="u_idUsuario" />
+         <result property="username" column="u_username" />
+         <association property="rol"  resultMap="rolMap"/>
+     </resultMap>
+  	
+  	 <resultMap id="rolMap" type="RolBeanIbatis">
+         <id property="idRol" column="u_idRol" />
+         <result property="descripcion" column="u_descripcion" />
+     </resultMap>
+     
+	<select id="SQL_buscaEmpleado"  parameterType="int" resultType="empleadoBeanIbatis">
+	SELECT 
+		idEmpleado as idEmpleado,
+		dni as dni,
+		nombre as nombre,
+		apePaterno as apePaterno,
+		apeMaterno as apeMaterno,
+		fechaIngreso as fechaIngreso,
+		celular as celular,
+		direccion as direccion,
+		img_bytes as filImagenBytes,
+		img_nombre as filImagenFileName,
+		img_content_type as filImagenContentType,
+		idUsuario as idUsuario
+	FROM
+		Empleado
+	WHERE
+		idEmpleado = #{id}
+	</select>
+     
+	<select id="SQL_buscaEmpleadoxUsuario"  parameterType="int" resultType="empleadoBeanIbatis">
+	SELECT 
+		idEmpleado as idEmpleado,
+		dni as dni,
+		nombre as nombre,
+		apePaterno as apePaterno,
+		apeMaterno as apeMaterno,
+		fechaIngreso as fechaIngreso,
+		celular as celular,
+		direccion as direccion,
+		idUsuario as idUsuario
+	FROM
+		Empleado
+	WHERE
+		idUsuario = #{id}
+	</select>
+	<select id="SQL_registraEmpleado"  parameterType="empleadoBeanIbatis">
+	INSERT INTO Empleado VALUES(null,
+		#{dni},
+		#{nombre},
+		#{apePaterno},
+		#{apeMaterno},
+		#{fechaIngreso},
+		#{celular},
+		#{direccion},
+		#{filImagenBytes},
+		#{filImagenFileName},
+		#{filImagenContentType},
+		#{idUsuario})
+	</select>
+	<select id="SQL_eliminaEmpleado"  parameterType="java.lang.String" resultType="empleadoBeanIbatis">
+	DELETE FROM Empleado WHERE idEmpleado =  #{id}
+	</select>
+	<select id="SQL_actualizaEmpleado"  parameterType="empleadoBeanIbatis">
+    UPDATE 
+			Empleado 
+		SET  
+			dni = #{dni}, 
+			nombre = #{nombre},
+			apePaterno = #{apePaterno},
+			apeMaterno = #{apeMaterno},
+			fechaIngreso = #{fechaIngreso},
+			direccion = #{direccion},
+			img_bytes = #{filImagenBytes},
+			img_nombre = #{filImagenFileName},
+			img_content_type = #{filImagenContentType}
+		WHERE 
+			idEmpleado = #{idEmpleado}
+	</select>
+	<select id="SQL_listaEmpleado"  resultMap="empleadoMap" >
+	SELECT
+		E.idEmpleado as e_idEmpleado,
+		E.dni as e_dni,
+		E.nombre as e_nombre,
+		E.apePaterno as e_apePaterno,
+		E.apeMaterno as e_apeMaterno,
+		E.fechaIngreso as e_fechaIngreso,
+		E.celular as e_celular,
+		E.direccion as e_direccion,
+		U.username as u_username,
+		R.idRol as u_idRol,		
+		R.descripcion as u_descripcion
+	FROM
+		Empleado E
+		INNER JOIN Usuario U ON E.idUsuario = U.idUsuario
+		INNER JOIN Rol R ON U.idRol = R.idRol
+	</select>
+	
+	<select id="SQL_validaDNI" resultType="java.lang.String" parameterType="java.lang.String">	
+		select 
+			dni
+		from 
+			Empleado
+		where 
+			dni = #{dni}
+	
+	</select>
+</mapper>

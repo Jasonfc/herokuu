@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="MantInsumos">
+	
+	
+	<select id="SQL_ComboCategoriaInsumo"  resultType="insumoBeanIbatis">
+		SELECT 
+				idCategoria as idCatInsumo,
+				nombreCategoria as desCatInsumo
+		FROM 
+			CategoriaInsumo
+	</select>	
+	
+	
+	
+
+	<select id="SQL_InsumoXEstado" parameterType="java.lang.String"	resultType="insumoBeanIbatis">
+					
+	</select>
+	<select id="SQL_traeTodosinsumo" 	resultType="insumoBeanIbatis">
+		SELECT 
+				idInsumos as intCodigo,
+				fechaIngreso as strFecRegistro,
+				fechaVencimiento as strFecVencimiento,
+				precio as InCantidad,
+				idCategoria as strCategoria,
+				Nombre as strNombre
+		FROM 
+			Insumos
+			
+	</select>
+	
+	<select id="SQL_eliminainsumo"  parameterType="int" >
+		DELETE FROM Insumos WHERE idInsumos =  #{id}
+	</select>
+	
+	<select id="SQL_insertainsumo"	parameterType="insumoBeanIbatis" >
+		INSERT INTO Insumos VALUES(null, 
+				#{strFecRegistro},
+				#{strFecVencimiento},
+				#{InCantidad},
+				#{filImagenBytes},
+				#{filImagenFileName},
+				#{filImagenContentType},
+				#{strCategoria},
+				#{strNombre})
+				
+	</select>
+	
+	<select id="SQL_buscainsumo" parameterType="int" resultType="insumoBeanIbatis">
+		SELECT 
+				idInsumos as intCodigo,
+				Nombre as strNombre,
+				precio as InCantidad,
+				FechaIngreso as strFecRegistro,
+				FechaVencimiento as strFecVencimiento,
+				idCategoria as strCategoria
+		FROM 
+			Insumos
+		WHERE 
+			idInsumos =  #{id}
+	</select>
+	
+	<select id="SQL_actualizainsumo" resultType="insumoBeanIbatis">
+			UPDATE 
+				Insumos 
+			SET  
+				fechaIngreso=#{strFecRegistro},
+				fechaVencimiento=#{strFecVencimiento},
+				precio=#{InCantidad},
+				img_bytes=#{filImagenBytes},
+				img_nombre=#{filImagenFileName},
+				img_content_type=#{filImagenContentType},
+				idCategoria=#{strCategoria},
+				Nombre=#{strNombre}
+			WHERE 
+				idInsumos = #{intCodigo}
+	</select>
+	
+	<select id="SQL_listaCategoriaInsumo" resultType="categoriainsumoBeanIbatis">
+			SELECT 
+				idCategoria as idCatInsumo,
+				nombreCategoria as desCatInsumo
+			FROM
+				CategoriaInsumo
+	</select>
+</mapper>

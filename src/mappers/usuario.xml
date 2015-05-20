@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="loginMYSQL">
+    
+	<select id="SQL_traerEnlacesDePadre"  parameterType="java.lang.String" resultType="enlaceBeanIbatis">
+		SELECT DISTINCT
+			idEnlace,
+			descripcion,
+			ruta,
+			idPadre
+		FROM
+			Enlace r
+		WHERE
+			idPadre = #{idPadre}
+	</select>
+    
+	<select id="SQL_traerEnlace"  parameterType="java.lang.String" resultType="enlaceBeanIbatis">
+		SELECT 
+			idEnlace,
+			descripcion,
+			ruta,
+			idPadre
+		FROM
+			Enlace r
+		WHERE
+			idEnlace = #{idPadre}
+	</select>
+	<select id="SQL_traerEnlacesDeUsuario"  parameterType="java.lang.String" resultType="enlaceBeanIbatis">
+		SELECT DISTINCT
+			r.idEnlace,
+			r.descripcion,
+			r.ruta,
+			r.idPadre
+		FROM
+			Enlace r,
+			Rol_Enlace p,
+			Rol t,
+			Usuario u
+		WHERE
+			r.idEnlace = p.idEnlace AND
+			p.idRol = t.idRol AND
+			t.idRol = u.idRol AND
+			u.idUsuario = #{idUsuario}
+		ORDER BY 2
+	</select>
+	
+	<select id="SQL_login" 	parameterType="UsuarioBeanIbatis" resultType="UsuarioBeanIbatis">
+		SELECT 
+			idUsuario as idUsuario,
+			username as username,
+			password as password,
+			idRol as idRol
+		FROM
+			Usuario
+		WHERE
+			username = #{username} AND password = #{password}
+	</select>
+	
+	<select id="SQL_insertaUsuario" parameterType="UsuarioBeanIbatis" resultType="java.lang.Integer">
+		INSERT INTO Usuario values (#{idUsuario},
+				#{username},
+				#{password},
+				#{idRol})
+	</select>
+	
+	<select id="SQL_eliminaUsuario" 	parameterType="java.lang.String" resultType="java.lang.Integer">
+		DELETE FROM Usuario WHERE idUsuario = #{idUsuario}
+	</select>
+	
+	<select id="SQL_generaClave" 	parameterType="UsuarioBeanIbatis" resultType="java.lang.Integer">
+		update 
+			Usuario 
+			set 
+				username  = #{username},
+				password  = #{password}
+			where idUsuario = #{idUsuario}
+	</select>
+	
+	<select id="SQL_ultimoCodigoUsuario" resultType="java.lang.Integer">
+	    select idUsuario from Usuario order by idUsuario desc LIMIT 1;
+	</select>
+	
+	<select id="SQL_validaUsername" resultType="java.lang.String" parameterType="java.lang.String">	
+		select 
+			username
+		from 
+			Usuario
+		where 
+			username = #{username}
+	
+	</select>
+	
+	
+</mapper>

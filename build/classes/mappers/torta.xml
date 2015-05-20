@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="tortaMYSQL">
+	
+	<resultMap id="tortaInsumoMap" type="tortaInsumoBeanIbatis">
+         <id property="idTorta" column="e_idTorta" />
+         <id property="cantidad" column="e_cantidad" />
+         <association property="insumo"  resultMap="insumoMap"/>
+     </resultMap>
+  	
+  	 <resultMap id="insumoMap" type="insumoBeanIbatis">
+         <id property="intCodigo" column="u_idCodigo" />
+         <result property="strNombre" column="u_Nombre" />
+         <result property="strFecRegistro" column="u_FechaRegistro" />
+     </resultMap>
+     
+	<select id="SQL_buscaTorta"  parameterType="int" resultType="tortaBeanIbatis">
+	SELECT 
+		idTorta as idTorta,
+		nombre as nombre,
+		stock as stock,
+		fechaRegistro as fechaRegistro,
+		precio as precio,
+		img_bytes as filImagenBytes,
+		img_nombre as filImagenFileName,
+		img_content_type as filImagenContentType,
+		descripcion as descripcion,
+		cantPersonas as cantPersonas,
+		cantPisos as cantPisos
+	FROM
+		Torta
+	WHERE
+		idTorta= #{id}
+	</select>
+	
+	<select id="SQL_registraTorta"  parameterType="tortaBeanIbatis">
+	INSERT INTO Torta VALUES(#{idTorta},
+		#{nombre},
+		#{stock},
+		#{fechaRegistro},
+		#{precio},
+		#{filImagenBytes},
+		#{filImagenFileName},
+		#{filImagenContentType},
+		#{descripcion},
+		#{cantPersonas},
+		#{cantPisos})
+	</select>
+	
+	<select id="SQL_registraDetalle"  parameterType="tortaInsumoBeanIbatis">
+	INSERT INTO DT_TortaInsumos VALUES(#{idTorta}, #{idInsumos}, #{cantidad})
+	</select>
+	<select id="SQL_eliminaDetalleTorta"  parameterType="java.lang.String">
+	DELETE FROM DT_TortaInsumos WHERE idTorta=  #{idTorta}
+	</select>
+	<select id="SQL_eliminaTorta"  parameterType="java.lang.String">
+	DELETE FROM Torta WHERE idTorta=  #{idTorta}
+	</select>
+	<select id="SQL_actualizaTorta"  parameterType="tortaBeanIbatis">
+    UPDATE 
+			Torta
+		SET  
+			nombre = #{nombre}, 
+			stock = #{stock},
+			fechaRegistro = #{fechaRegistro},
+			precio = #{precio},
+			descripcion = #{descripcion},
+			cantPersonas = #{cantPersonas},
+			cantPisos = #{cantPisos}
+			
+		WHERE 
+			idTorta= #{idTorta}
+	</select>
+	<select id="SQL_listaTorta"  resultType="tortaBeanIbatis">
+	SELECT
+		idTorta as idTorta,
+		nombre as nombre,
+		stock as stock,
+		fechaRegistro as fechaRegistro,
+		precio as precio,
+		descripcion as descripcion,
+		cantPersonas as cantPersonas,
+		cantPisos as cantPisos
+	FROM
+		Torta 
+	</select>
+	<select id="SQL_listaDetalle"   parameterType="java.lang.String" resultMap="tortaInsumoMap">
+	SELECT
+		I.idInsumos as u_idCodigo,
+		I.Nombre as u_Nombre,
+		I.fechaIngreso as u_FechaRegistro
+	FROM
+		DT_TortaInsumos TI join Insumos I
+		on TI.idInsumos = I.idInsumos
+		where TI.idTorta = #{idTorta}
+	</select>
+	
+	<select id="SQL_ultimoCodigoTorta" resultType="java.lang.Integer">
+	    select idTorta from Torta order by idTorta desc LIMIT 1;
+	</select>
+</mapper>
